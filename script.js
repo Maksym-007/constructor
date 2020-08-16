@@ -16,44 +16,54 @@ const gradeTax = {
     [grades.Middle]: 0.5,
     [grades.Senior]: 0.75,
 };
+const fineTax = {
+    tax1: 0.1,
+    tax2: 0.2,
+    tax3: 0.3,
+};
 
-
-function User(name, language, grade = grades.Junior) {
+function User(name, language, grade = grades.Junior,) {
     this.name = name;
     this.grade = grade;
     this.salary = 1000;
     this.language = language;
-    this.tasks = 0;
+    this.tasks = 20;
 
     this.addTask = () => {
         this.tasks++;
+
+    };
+    /**
+    //  * This method...
+    //  */
+    this.fine = () => {
+        if (this.salary >= 2000) {
+            this.salary -= this.salary * fineTax.tax3;
+        } if (this.salary > 1500 && this.salary < 2000) {
+            this.salary -= this.salary * fineTax.tax2;
+        } if (this.salary <= 1500) {
+            this.salary -= this.salary * fineTax.tax1;
+        }
+
     };
     this.upGrade = () => {
-        let taskCompleted = +prompt('How many tasks you finised?');
-        let n = 4;
-        if (taskCompleted<=1) {
-            alert(this.name +' '+'That is why you still Junior');
+        let amount = 10;
+        let nextLevel = this.tasks - 0;
+        if (this.tasks >= amount) {
+            this.grade = grades.Junior;
+            console.log(this.name + ' ' + 'По кол-ву выполненных задачь ваш уровень ' + ' ' + this.grade);
         }
-        if (taskCompleted > 1 && taskCompleted < n) {
+        if (this.tasks > amount / amount && this.tasks < amount) {
             this.grade = grades.Middle;
-            let odd = n - taskCompleted;
-            if (odd < 2) {
-                alert(this.name +','+'Congratulate you are Middle, next level after' + ' ' + odd + ' ' + 'task');
-            } if (odd >= 2) {
-                alert(this.name +','+'Congratulate you are Middle, next level after' + ' ' + odd + ' ' + 'tasks');
-            }
-        } if (taskCompleted >= n && taskCompleted === n+1) {
-            this.grade = grades.Senior;
-            alert('Congratulate you are Senior')
-        } if (taskCompleted >n+1) {
-            this.grade = grades.Senior;
-            alert(this.name + ',' + 'you are the BEST');
+            console.log(this.name + ' ' + 'вы можете претендовать на звание senior кол-во необходимых задач' + ' ' + nextLevel);
         }
-    }
+        if (this.tasks == 0) {
+            this.grade = grades.Senior;
+            console.log(this.name + ' ' + 'Поздравляю, вы выполнили все задания, ваш уровень подготовки соответствует званию Senior ');
+        }
+    };
 
-    /**
-     * This method...
-     */
+
     this.finishTask = () => {
         if (this.tasks > 0) {
             this.tasks--;
@@ -61,13 +71,36 @@ function User(name, language, grade = grades.Junior) {
                 (bonuses[this.language] || bonuses.default) * gradeTax[this.grade];
         }
     };
-}
 
-const user = new User('John', 'C++');
+};
+
+
+const user = new User('John', 'C++',);
 const user1 = new User('Vasya', 'Rust', grades.Senior);
 const user2 = new User('Nifertiti', 'Bu', grades.Middle);
 
-user.upGrade();
+user.finishTask();
+user.finishTask();
 
-console.log(user);
-// console.log(odd);
+user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask();
+user1.finishTask(); user1.finishTask(); user1.finishTask();
+
+user2.finishTask(); user2.finishTask(); user2.finishTask(); user2.finishTask();
+user2.finishTask(); user2.finishTask(); user2.finishTask(); user2.finishTask();
+user2.finishTask(); user2.finishTask(); user2.finishTask(); user2.finishTask();
+
+user.upGrade();
+user1.upGrade();
+user2.upGrade();
+
+user1.fine();
+user.fine();
+user2.fine();
+
+console.log(user, user1, user2);
